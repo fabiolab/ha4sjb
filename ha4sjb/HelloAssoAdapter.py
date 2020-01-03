@@ -24,6 +24,13 @@ COL_QSS = 32
 # FIXME : no GENDER COLUMN !!!
 COL_GENRE = -1
 
+LABEL_EXTERIEUR = "Extérieur"
+LABEL_LICENCIE = "Licencié"
+LABEL_OUI = "Oui"
+LABEL_NON = "Non"
+LABEL_FAIT = "Fait"
+LABEL_HELLOASSO = "HelloAsso"
+
 
 class HelloAssoAdapter:
 
@@ -59,18 +66,18 @@ class HelloAssoAdapter:
                        item[COL_DATE_NAISSANCE],
                        None,
                        item[COL_CRENEAU],
-                       "Extérieur" if item[COL_FORMULE] == "Extérieur" else "Licencié",
-                       "Oui",
+                       LABEL_EXTERIEUR if item[COL_FORMULE] == LABEL_EXTERIEUR else LABEL_LICENCIE,
+                       LABEL_OUI,
                        None,
-                       "Non",
+                       LABEL_NON,
                        None,
-                       "Fait",
+                       LABEL_FAIT,
                        item[COL_IC],
                        item[COL_EMAIL],
                        item[COL_CODE_POSTAL],
-                       "Oui",
+                       LABEL_OUI,
                        None,
-                       "HelloAsso",
+                       LABEL_HELLOASSO,
                        None,
                        None,
                        None,

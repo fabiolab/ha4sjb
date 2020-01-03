@@ -1,3 +1,5 @@
+httplib2
+googleapiclient
 click
 loguru
 pendulum

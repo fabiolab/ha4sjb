@@ -1,11 +1,6 @@
 # Data folder
 /data/
-
-# Legacy code
-*legacy/
-
-# API P2A
-p2a_api/
+credentials.json
 
 # IDE specific files
 .idea/
