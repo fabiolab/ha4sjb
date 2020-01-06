@@ -29,6 +29,23 @@ LABEL_NON = "Non"
 LABEL_FAIT = "Fait"
 LABEL_HELLOASSO = "HelloAsso"
 
+MATCH_CRENEAUX = {
+    "L1 - Lundi 18h/20h (Milliat/Loisirs)": "L1 Lun - M - 18h - Non encadré",
+    "L2 - Lundi 20h/22h15 (Allende/Loisirs)": "L2 Lun - A - 20h - Antoine",
+    "L3 - Mercredi 20h/22h15 (Allende/Loisirs)": "L3 Mer - A - 20h - Xavier",
+    "L4 - Mercredi 18h30/20h (Milliat/Loisirs)": "L4 Mer - M - 18h30 - Seb",
+    "C1 - Mercredi 20h/22h30 (Milliat/Compétiteurs N&R)": "C1 Mer - M - 20h - Seb",
+    "C2 - Jeudi 18h30/20h (Milliat/Compétiteurs D&P)": "C2 Jeu - M - 18h30 - Seb",
+    "C3 - Jeudi 20h à 22h30 (Milliat/Compétiteurs R&D)": "C3 Jeu - M - 20h - Seb",
+    "J1 - Mercredi 13h30/15h (Allende/Poussins & Benjamins)": "J1 Mer - A - 13h30 -  Jérome",
+    "J2 - Mercredi 15h/16h30 (Allende/Minimes & Cadets)": "J2 Mer - A - 15h00 - Jérome",
+    "J7 - Mercredi 17h/18h (Allende/Minibad)": "J7 Mer - A - 17h - Seb",
+    "J3 - Jeudi 17h30/18h30 (Millat/Minibad & poussins confirmés)": "J3 Jeu - M - 17h30 - Seb",
+    "J4 - Vendredi 17h15/18h30 (Millat/Poussins/Benjamins)": "J4 Ven - M - 17h15 - Jérome",
+    "J5 - Vendredi 18h30/20h00 (Millat/Minimes/Cadets Compétiteurs)": "J5 Ven - M - 18h30 - Jérome",
+    "J6 - Samedi 10h30/11h30 (Millat/Minibad/Poussins débutant)": "J6 Sam - M - 10h30 - Killian"
+}
+
 
 class HelloAssoAdapter:
 
@@ -63,7 +80,7 @@ class HelloAssoAdapter:
                        item[COL_GENRE],
                        item[COL_DATE_NAISSANCE],
                        None,
-                       item[COL_CRENEAU],
+                       MATCH_CRENEAUX[item[COL_CRENEAU]],
                        LABEL_EXTERIEUR if item[COL_FORMULE] == LABEL_EXTERIEUR else LABEL_LICENCIE,
                        LABEL_OUI,
                        None,
