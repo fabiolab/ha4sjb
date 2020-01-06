@@ -12,17 +12,15 @@ COL_DATE = 9
 COL_EMAIL = 10
 COL_DATE_NAISSANCE = 11
 COL_FACTURE_URL = 12
-COL_PHONE = 22
-COL_CODE_POSTAL = 23
+COL_GENRE = 22
+COL_PHONE = 24
 COL_ADRESSE = 25
+COL_CODE_POSTAL = 26
 COL_VILLE = 27
-COL_CRENEAU = 28
-COL_IC = 30
-COL_CERTIFICAT = 31
-COL_QSS = 32
-
-# FIXME : no GENDER COLUMN !!!
-COL_GENRE = -1
+COL_CRENEAU = 29
+COL_IC = 31
+COL_CERTIFICAT = 32
+COL_QSS = 33
 
 LABEL_EXTERIEUR = "Extérieur"
 LABEL_LICENCIE = "Licencié"
@@ -62,7 +60,7 @@ class HelloAssoAdapter:
                        now.format('DD/MM/YYYY'),
                        item[COL_NOM].upper(),
                        item[COL_PRENOM],
-                       "?",  # FIXME
+                       item[COL_GENRE],
                        item[COL_DATE_NAISSANCE],
                        None,
                        item[COL_CRENEAU],

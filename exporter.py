@@ -17,8 +17,8 @@ def ha2google(csv_file: str, date_from: datetime):
     google_spreadsheet = GoogleSpreadSheet("test")
     google_spreadsheet.import_rows(data)
 
-    google_drive = GoogleDrive()
-    google_drive.upload_pdf_file("data/amandine.pdf", "BRAULT_Amandine_Certif.pdf")
+    # google_drive = GoogleDrive()
+    # google_drive.upload_pdf_file("data/amandine.pdf", "BRAULT_Amandine_Certif.pdf")
 
 
 if __name__ == "__main__":
