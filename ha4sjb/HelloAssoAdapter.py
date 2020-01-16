@@ -1,26 +1,6 @@
-import csv
 from loguru import logger
 import pendulum
-from datetime import datetime
-
-COL_FORMULE = 1
-COL_ADHESION = 2
-COL_PROMO = 3
-COL_NOM = 6
-COL_PRENOM = 7
-COL_DATE = 9
-COL_EMAIL = 10
-COL_DATE_NAISSANCE = 11
-COL_FACTURE_URL = 12
-COL_GENRE = 22
-COL_PHONE = 24
-COL_ADRESSE = 25
-COL_CODE_POSTAL = 26
-COL_VILLE = 27
-COL_CRENEAU = 29
-COL_IC = 31
-COL_CERTIFICAT = 32
-COL_QSS = 33
+import requests
 
 LABEL_EXTERIEUR = "Extérieur"
 LABEL_LICENCIE = "Licencié"
@@ -52,50 +32,49 @@ class HelloAssoAdapter:
     def __init__(self):
         self.items = list()
 
-    def load_from_helloasso(self, csv_file: str, from_date: datetime):
-        with open(csv_file, 'r') as input_file:
-            reader = csv.reader(input_file, delimiter=';')
-
-            # Skip header
-            next(reader)
-            self.items = [item for item in reader if
-                          pendulum.from_format(item[COL_DATE], "DD/MM/YYYY HH:mm:ss") >= pendulum.instance(from_date)]
-
-            logger.info(f"{len(self.items)} items loaded")
-
-    def export_to_google(self, ) -> list:
+    def load_from_apiresponse(self, resources: list):
         google_items = list()
-        for item in self.items:
-            google_items.append(self.helloasso_to_google(item))
+        for item in resources:
+            google_items.append(self.h4_to_google(item))
 
+        logger.info(f"{len(google_items)} items loaded")
         return google_items
 
     @staticmethod
-    def helloasso_to_google(item: list) -> list:
+    def get_custom_value(custom_values: list, searched_key: str) -> str:
+        for element in custom_values:
+            if element['label'] == searched_key:
+                return element['value']
+
+        return None
+
+    @staticmethod
+    def h4_to_google(item: dict) -> list:
         now = pendulum.now()
-        google_item = [item[COL_DATE].split()[0],
+
+        google_item = [item['date'],
                        now.format('DD/MM/YYYY'),
-                       item[COL_NOM].upper(),
-                       item[COL_PRENOM],
-                       item[COL_GENRE],
-                       item[COL_DATE_NAISSANCE],
+                       item['last_name'].upper(),
+                       item['first_name'],
+                       HelloAssoAdapter.get_custom_value(item['custom_infos'], 'Genre'),
+                       HelloAssoAdapter.get_custom_value(item['custom_infos'], 'Date de naissance'),
                        None,
-                       MATCH_CRENEAUX[item[COL_CRENEAU]],
-                       LABEL_EXTERIEUR if item[COL_FORMULE] == LABEL_EXTERIEUR else LABEL_LICENCIE,
+                       MATCH_CRENEAUX.get(HelloAssoAdapter.get_custom_value(item['custom_infos'], 'Créneau')),
+                       LABEL_EXTERIEUR if item['option_label'] == LABEL_EXTERIEUR else LABEL_LICENCIE,
                        LABEL_OUI,
-                       None,
+                       HelloAssoAdapter.get_custom_value(item['custom_infos'], 'Certificat médical'),
                        LABEL_NON,
-                       None,
+                       HelloAssoAdapter.get_custom_value(item['custom_infos'], 'Questionnaire Santé Sport'),
                        LABEL_FAIT,
-                       item[COL_IC],
-                       item[COL_EMAIL],
-                       item[COL_CODE_POSTAL],
+                       HelloAssoAdapter.get_custom_value(item['custom_infos'], 'Interclubs'),
+                       item['email'],
+                       HelloAssoAdapter.get_custom_value(item['custom_infos'], 'Code Postal'),
                        LABEL_OUI,
                        None,
                        LABEL_HELLOASSO,
                        None,
                        None,
                        None,
-                       item[COL_ADHESION]
+                       f"{item['amount']} €"
                        ]
         return google_item

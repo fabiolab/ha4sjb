@@ -14,6 +14,18 @@ python 3.6+
 pip install -r requirements.txt
 ```
 
+# HelloAsso API
+To retrieve data from HelloAsso API, you must set the following environment variables :
+
+```
+export ORGANIZATION_ID=    # can be get here: https://api.helloasso.com/v3/organizations.json
+export CAMPAIGN_ID=        # can be get here: call https://api.helloasso.com/v3/organizations/ORGANIZATION_ID/campaigns.json 
+
+# Ask to HelloAsso Support to get your own user/password values
+export API_KEY=
+export API_USER=
+```
+
 # ToDo
 - Use helloasso api instead of csv export
 - Crontab the job to make export automatic (heroku ?)

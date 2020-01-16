@@ -1,3 +1,4 @@
+requests
 httplib2
 googleapiclient
 click
@@ -5,3 +6,4 @@ loguru
 pendulum
 gspread
 oauth2client
+python-dotenv
