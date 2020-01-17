@@ -3,7 +3,7 @@ import requests
 import pendulum
 import os
 from requests.auth import HTTPBasicAuth
-from datetime import datetime
+from datetime import datetime, date
 
 HOST = "api.helloasso.com"
 ENDPOINT = "/v3"
@@ -11,13 +11,30 @@ RESULT_PER_PAGE = 500
 ACTIONS_ROUTE = f"/organizations/{os.getenv('ORGANIZATION_ID')}/campaigns/{os.getenv('CAMPAIGN_ID')}/actions.json"
 
 
+def _get_season_start_date(current_date: date = pendulum.now()) -> date:
+    """
+        Get the start date of the current season.
+
+        :Example:
+        >>> get_season_start_date(pendulum.date(2019, 8, 2))
+        Date(2019, 7, 1)
+        >>> get_season_start_date(pendulum.date(2019, 4, 28))
+        Date(2018, 7, 1)
+    """
+    start_date = pendulum.date(current_date.year, 7, 1)
+    if current_date.month < 7:
+        start_date = start_date.subtract(years=1)
+
+    return start_date
+
+
 class HelloAssoApi:
 
     def __init__(self):
-        pass
+        ...
 
     @staticmethod
-    def get_actions(from_date: datetime = pendulum.datetime(2019, 7, 1)) -> list:
+    def get_actions(from_date: datetime = get_season_start_date()) -> list:
         params = {
             "from": from_date,
             "results_per_page": 500

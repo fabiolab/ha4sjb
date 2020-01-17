@@ -1,6 +1,5 @@
 from loguru import logger
 import pendulum
-import requests
 
 LABEL_EXTERIEUR = "Extérieur"
 LABEL_LICENCIE = "Licencié"

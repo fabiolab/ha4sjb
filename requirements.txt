@@ -6,4 +6,3 @@ loguru
 pendulum
 gspread
 oauth2client
-python-dotenv
