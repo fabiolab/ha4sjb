@@ -17,3 +17,5 @@ class GoogleSpreadSheet:
     def import_rows(self, data):
         for item in data:
             self.sheet.append_row(item)
+
+        logger.info(f"{len(data)} items added to {self.sheet.spreadsheet}")

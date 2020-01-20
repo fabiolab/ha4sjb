@@ -49,5 +49,5 @@ class HelloAssoApi:
 
         body = response.json().get('resources', [])
         logger.debug(body)
-        logger.debug(f"{len(body)} action(s) recorded from {from_date}")
+        logger.info(f"{len(body)} action(s) recorded from {from_date}")
         return body
