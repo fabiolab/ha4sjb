@@ -16,9 +16,9 @@ def _get_season_start_date(current_date: date = pendulum.now()) -> date:
         Get the start date of the current season.
 
         :Example:
-        >>> get_season_start_date(pendulum.date(2019, 8, 2))
+        >>> _get_season_start_date(pendulum.date(2019, 8, 2))
         Date(2019, 7, 1)
-        >>> get_season_start_date(pendulum.date(2019, 4, 28))
+        >>> g_et_season_start_date(pendulum.date(2019, 4, 28))
         Date(2018, 7, 1)
     """
     start_date = pendulum.date(current_date.year, 7, 1)
@@ -34,7 +34,7 @@ class HelloAssoApi:
         ...
 
     @staticmethod
-    def get_actions(from_date: datetime = get_season_start_date()) -> list:
+    def get_actions(from_date: datetime = _get_season_start_date()) -> list:
         params = {
             "from": from_date,
             "results_per_page": 500
