@@ -1,6 +1,6 @@
 requests
 httplib2
-googleapiclient
+google-api-python-client
 click
 loguru
 pendulum
