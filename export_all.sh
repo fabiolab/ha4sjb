@@ -1,5 +1,6 @@
 #!/bin/bash
+export HA4SJB_HOME=/datas/vol2/w4a149500/home/w4a149500/ha4sjb
+source .env
 cd "${HA4SJB_HOME}"
-source "${HA4SJB_HOME}"/.env
-source "${HA4SJB_HOME}"/"${PYTHON_VENV_DIR}"/activate
-python "${HA4SJB_HOME}"/exporter.py 2019-07-01
+source "${PYTHON_VENV_DIR}"/activate
+python exporter.py 2019-07-01
