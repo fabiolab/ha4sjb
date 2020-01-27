@@ -51,7 +51,7 @@ class HelloAssoAdapter:
     def h4_to_google(item: dict) -> list:
         now = pendulum.now()
 
-        google_item = [item['date'],
+        google_item = [item['date'].format('DD/MM/YYYY'),
                        now.format('DD/MM/YYYY'),
                        item['last_name'].upper(),
                        item['first_name'],

@@ -2,6 +2,7 @@
 /data/
 credentials.json
 *.env
+p3.6
 
 # IDE specific files
 .idea/

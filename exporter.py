@@ -7,8 +7,9 @@ from datetime import datetime
 from ha4sjb.HelloAssoApi import HelloAssoApi
 import os
 
-GOOGLE_SPREADSHEET = "HelloAsso Adhérents 2019-2020"  # Must be shared with the user set in credentials.json
+GOOGLE_SPREADSHEET = "Adhérents 2019/2020"  # Must be shared with the user set in credentials.json
 
+logger.add("file_{time}.log")
 logger.debug(os.getenv("ORGANIZATION_ID"))
 
 
