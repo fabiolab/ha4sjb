@@ -40,6 +40,7 @@ class HelloAssoApi:
             "results_per_page": 500
         }
         url = f"https://{HOST}{ENDPOINT}{ACTIONS_ROUTE}"
+        logger.info(f"Call {url}")
         response = requests.request("GET", url, params=params,
                                     auth=HTTPBasicAuth(os.getenv('API_USER'), os.getenv('API_KEY')))
 

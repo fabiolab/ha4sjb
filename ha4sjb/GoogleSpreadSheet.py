@@ -12,6 +12,7 @@ class GoogleSpreadSheet:
     def __init__(self, spreadsheet: str):
         creds = ServiceAccountCredentials.from_json_keyfile_name(CREDENTIALS_FILE, SCOPE)
         client = gspread.authorize(creds)
+        logger.info(f"Opening {spreadsheet} for writing")
         self.sheet = client.open(spreadsheet).sheet1  # Open the spreadhseet
 
     def import_rows(self, data):
