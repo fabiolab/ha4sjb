@@ -47,6 +47,7 @@ class HelloAssoAdapter:
         if item['option_label'] == "Extérieur":
             poona = "Extérieur"
 
+        # The order must match the GoogleSheet columns
         google_item = [pendulum.parse(item['date']).format('DD/MM/YYYY'),
                        now.format('DD/MM/YYYY'),
                        item['last_name'].upper(),
@@ -61,6 +62,7 @@ class HelloAssoAdapter:
                        HelloAssoAdapter.get_custom_value(item['custom_infos'], "Autorisation mineurs"),
                        HelloAssoAdapter.get_custom_value(item['custom_infos'],
                                                          "Certificat médical de moins d'un an ou Questionnaire Santé"),
+                       None,
                        poona,
                        facture,
                        HelloAssoAdapter.get_custom_value(item['custom_infos'], 'Interclubs'),
