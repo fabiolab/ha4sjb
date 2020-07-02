@@ -1,36 +1,44 @@
 import click
+import pendulum
 from loguru import logger
 from ha4sjb.HelloAssoAdapter import HelloAssoAdapter
 from ha4sjb.GoogleSpreadSheet import GoogleSpreadSheet
-from ha4sjb.GoogleDrive import GoogleDrive
 from datetime import datetime
 from ha4sjb.HelloAssoApi import HelloAssoApi
 import os
 
-GOOGLE_SPREADSHEET = "Adhérents 2020/2021"  # Must be shared with the user set in credentials.json
+# GOOGLE_SPREADSHEET = "Adhérents 2020/2021"  # Must be shared with the user set in credentials.json
 # GOOGLE_SPREADSHEET = "Test HelloAsso Adhérents 2020-2021"  # Must be shared with the user set in credentials.json
 
-# logger.add("file_{time}.log")
-logger.debug(f"ORGANIZATION : {os.getenv('ORGANIZATION_ID')}")
-logger.debug(f"CAMPAIGN_ID : {os.getenv('CAMPAIGN_ID')}")
-logger.debug(f"SPREADSHEET : {GOOGLE_SPREADSHEET}")
+REQUIRED_ENV_VARIABLES = ['ORGANIZATION_ID', 'CAMPAIGN_ID', 'GOOGLE_SPREADSHEET']
 
 
 @click.command()
-@click.argument("date_from", type=click.DateTime())
-def ha2google(date_from: datetime):
+@click.option("--from_date", required=False, type=click.DateTime())
+def ha2google(from_date: datetime):
+    if not from_date:
+        from_date = pendulum.datetime(2020, 1, 1)
+
     api_ha = HelloAssoApi()
-    actions = api_ha.get_actions(date_from)
+    actions = api_ha.get_actions(from_date)
 
     adapter = HelloAssoAdapter()
     data = adapter.load_from_apiresponse(actions)
 
-    google_spreadsheet = GoogleSpreadSheet(GOOGLE_SPREADSHEET)
+    google_spreadsheet = GoogleSpreadSheet(os.getenv('GOOGLE_SPREADSHEET'))
     google_spreadsheet.import_rows(data)
 
-    # google_drive = GoogleDrive()
-    # google_drive.upload_pdf_file("data/amandine.pdf", "BRAULT_Amandine_Certif.pdf")
+
+def _check_env_variables():
+    for env_var in REQUIRED_ENV_VARIABLES:
+        if not os.getenv(env_var):
+            message = f"Mandatory environment variable {env_var} is not set"
+            logger.error(message)
+            raise ValueError(message)
+        else:
+            logger.info(f"{env_var} = {os.getenv(env_var)}")
 
 
 if __name__ == "__main__":
+    _check_env_variables()
     ha2google()
