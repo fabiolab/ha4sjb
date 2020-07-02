@@ -7,3 +7,4 @@ pendulum
 gspread
 oauth2client
 APScheduler
+setuptools>=40.3.0
