@@ -6,3 +6,4 @@ loguru
 pendulum
 gspread
 oauth2client
+APScheduler==3.0.0
