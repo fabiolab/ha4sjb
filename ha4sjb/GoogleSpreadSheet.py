@@ -25,7 +25,7 @@ class GoogleSpreadSheet:
         for item in data:
             if item[0] not in self.sheet.col_values(RECORD_ID_COL):
                 item_counter += 1
-                # self.sheet.append_row(item)
+                self.sheet.append_row(item)
                 logger.info(f"{item[3]} {item[4]} added to {self.sheet.spreadsheet}")
 
         logger.info(f"{item_counter} items added to {self.sheet.spreadsheet}")
