@@ -68,6 +68,7 @@ export API_KEY=
 export API_USER=
 export GOOGLE_SPREADSHEET=
 export PYTHON_VENV_DIR=
+export GOOGLE_CREDENTIALS=   # Content of the google auth credentials file
 ```
 
 Make the script executable and run it (it requires `bash` installed on your system and located in `/bin/bash`):

@@ -10,7 +10,7 @@ import os
 # GOOGLE_SPREADSHEET = "Adhérents 2020/2021"  # Must be shared with the user set in credentials.json
 # GOOGLE_SPREADSHEET = "Test HelloAsso Adhérents 2020-2021"  # Must be shared with the user set in credentials.json
 
-REQUIRED_ENV_VARIABLES = ['ORGANIZATION_ID', 'CAMPAIGN_ID', 'GOOGLE_SPREADSHEET']
+REQUIRED_ENV_VARIABLES = ['ORGANIZATION_ID', 'CAMPAIGN_ID', 'GOOGLE_SPREADSHEET', 'GOOGLE_CREDENTIALS']
 
 
 @click.command()
@@ -20,6 +20,8 @@ def run(from_date: datetime):
 
 
 def ha2google(from_date: datetime = None):
+    _check_env_variables()
+
     if not from_date:
         from_date = pendulum.datetime(2020, 1, 1)
 
@@ -44,5 +46,4 @@ def _check_env_variables():
 
 
 if __name__ == "__main__":
-    _check_env_variables()
     run()
