@@ -1,6 +1,8 @@
 from loguru import logger
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+import os
+import json
 
 SCOPE = ["https://spreadsheets.google.com/feeds", 'https://www.googleapis.com/auth/spreadsheets',
          "https://www.googleapis.com/auth/drive.file", "https://www.googleapis.com/auth/drive"]
@@ -11,6 +13,11 @@ RECORD_ID_COL = 1
 class GoogleSpreadSheet:
 
     def __init__(self, spreadsheet: str):
+        if not os.path.isfile(CREDENTIALS_FILE):
+            logger.info(f"Credentials file doesn't exist: creating it from GOOGLE_CREDENTIALS env variable")
+            with open(CREDENTIALS_FILE, 'w') as credentials_file:
+                json.dump(os.getenv('GOOGLE_CREDENTIALS'), credentials_file)
+
         creds = ServiceAccountCredentials.from_json_keyfile_name(CREDENTIALS_FILE, SCOPE)
         client = gspread.authorize(creds)
         logger.info(f"Opening {spreadsheet} for writing")
