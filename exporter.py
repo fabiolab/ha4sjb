@@ -19,7 +19,7 @@ def run(from_date: datetime):
     ha2google(from_date)
 
 
-def ha2google(from_date: datetime):
+def ha2google(from_date: datetime = None):
     if not from_date:
         from_date = pendulum.datetime(2020, 1, 1)
 
