@@ -13,10 +13,8 @@ RECORD_ID_COL = 1
 class GoogleSpreadSheet:
 
     def __init__(self, spreadsheet: str):
-        if not os.path.isfile(CREDENTIALS_FILE):
-            logger.info(f"Credentials file doesn't exist: creating it from GOOGLE_CREDENTIALS env variable")
-            with open(CREDENTIALS_FILE, 'w') as credentials_file:
-                json.dump(os.getenv('GOOGLE_CREDENTIALS'), credentials_file)
+        with open(CREDENTIALS_FILE, 'w') as credentials_file:
+            json.dump(os.getenv('GOOGLE_CREDENTIALS'), credentials_file)
 
         creds = ServiceAccountCredentials.from_json_keyfile_name(CREDENTIALS_FILE, SCOPE)
         client = gspread.authorize(creds)
