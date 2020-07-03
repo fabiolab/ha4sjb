@@ -1,4 +1,3 @@
-import pendulum
 from apscheduler.schedulers.blocking import BlockingScheduler
 from exporter import ha2google
 
