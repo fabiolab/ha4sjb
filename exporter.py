@@ -1,16 +1,17 @@
 import click
 import pendulum
 from loguru import logger
+
+from ha4sjb.GoogleDrive import GoogleDrive
 from ha4sjb.HelloAssoAdapter import HelloAssoAdapter
 from ha4sjb.GoogleSpreadSheet import GoogleSpreadSheet
 from datetime import datetime
 from ha4sjb.HelloAssoApi import HelloAssoApi
 import os
+import wget
 
-# GOOGLE_SPREADSHEET = "Adhérents 2020/2021"  # Must be shared with the user set in credentials.json
-# GOOGLE_SPREADSHEET = "Test HelloAsso Adhérents 2020-2021"  # Must be shared with the user set in credentials.json
-
-REQUIRED_ENV_VARIABLES = ['ORGANIZATION_ID', 'CAMPAIGN_ID', 'GOOGLE_SPREADSHEET', 'GOOGLE_CREDENTIALS']
+REQUIRED_ENV_VARIABLES = ['ORGANIZATION_ID', 'CAMPAIGN_ID', 'GOOGLE_SPREADSHEET', 'GOOGLE_CREDENTIALS',
+                          'GOOGLE_FOLDER_ID']
 
 
 @click.command()
@@ -19,6 +20,7 @@ def run(from_date: datetime):
     ha2google(from_date)
 
 
+# From HelloAsso to Google Drive/Spreadsheet
 def ha2google(from_date: datetime = None):
     _check_env_variables()
 
@@ -31,8 +33,13 @@ def ha2google(from_date: datetime = None):
     adapter = HelloAssoAdapter()
     data = adapter.load_from_apiresponse(actions)
 
-    google_spreadsheet = GoogleSpreadSheet(os.getenv('GOOGLE_SPREADSHEET'))
-    google_spreadsheet.import_rows(data)
+    google_spreadsheet = GoogleSpreadSheet(os.getenv('GOOGLE_SPREADSHEET'), os.getenv('GOOGLE_CREDENTIALS'))
+    items_added = google_spreadsheet.import_rows(data)
+
+    files_to_transfer = adapter.get_certificates(items_added)
+
+    googledrive = GoogleDrive(os.getenv('GOOGLE_CREDENTIALS'))
+    googledrive.import_files(files_to_transfer, os.getenv('GOOGLE_FOLDER_ID'), )
 
 
 def _check_env_variables():

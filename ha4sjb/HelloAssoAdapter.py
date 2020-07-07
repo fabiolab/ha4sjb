@@ -80,3 +80,7 @@ class HelloAssoAdapter:
         ]
 
         return google_item
+
+    @staticmethod
+    def get_certificates(items_added):
+        return [{'file_url': item[12], 'first_name': item[3], 'last_name': item[4]} for item in items_added]

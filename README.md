@@ -82,8 +82,36 @@ The script may be run with python (env variables must be set first):
 python exporter.py
 ```
 
+# Heroku notes
+To automate the job run with an heroku account, follow these steps : https://devcenter.heroku.com/articles/clock-processes-python
+
+You will have to set the env variables with the Dashboard or with the CLi:
+```
+heroku config:set ORGANIZATION_ID=
+heroku config:set CAMPAIGN_ID=
+heroku config:set API_KEY=
+heroku config:set API_USER=
+heroku config:set GOOGLE_SPREADSHEET=
+heroku config:set GOOGLE_FOLDER_ID=
+
+GOOGLE_CREDENTIALS => use the dashboard and put the content of the credentials.json file
+```
+
+- The `runtime.txt` must contains the python version to use
+- The project must have a `requirements.txt`
+- The `Procfile` file associates a name (export) to the command to run
+
+To deploy the app, use the heroku cli:
+```
+git push heroku master
+```
+And add the task to lauch:
+```
+heroku ps:scale export=1
+```
+
 # ToDo
 [x] Use helloasso api instead of csv export
 [x] Crontab the job to make export automatic
 [ ] Email bill
-[ ] Backup HelloAsso files (medical certificates) to Google Drive
+[x] Backup HelloAsso files (medical certificates) to Google Drive

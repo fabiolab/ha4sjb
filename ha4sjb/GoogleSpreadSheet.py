@@ -6,27 +6,28 @@ import json
 
 SCOPE = ["https://spreadsheets.google.com/feeds", 'https://www.googleapis.com/auth/spreadsheets',
          "https://www.googleapis.com/auth/drive.file", "https://www.googleapis.com/auth/drive"]
-CREDENTIALS_FILE = "credentials.json"
 RECORD_ID_COL = 1
 
 
 class GoogleSpreadSheet:
 
-    def __init__(self, spreadsheet: str):
-        credentials = json.loads(os.getenv('GOOGLE_CREDENTIALS'))
+    def __init__(self, spreadsheet: str, credentials: str):
+        credentials = json.loads(credentials)
 
         creds = ServiceAccountCredentials.from_json_keyfile_dict(credentials, SCOPE)
         client = gspread.authorize(creds)
         logger.info(f"Opening {spreadsheet} for writing")
         self.sheet = client.open(spreadsheet).sheet1  # Open the spreadhseet
 
-    def import_rows(self, data):
-        item_counter = 0
+    def import_rows(self, data: list) -> list:
+        items = list()
         for item in data:
             if item[0] not in self.sheet.col_values(RECORD_ID_COL):
-                item_counter += 1
+                items.append(item)
                 self.sheet.append_row(item)
                 logger.info(f"{item[3]} {item[4]} added to {self.sheet.spreadsheet}")
 
-        logger.info(f"{item_counter} items added to {self.sheet.spreadsheet}")
+        logger.info(f"{len(items)} items added to {self.sheet.spreadsheet}")
         logger.info(f"{len(data)} items in HelloAsso")
+
+        return items
