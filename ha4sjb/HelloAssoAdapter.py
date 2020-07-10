@@ -57,6 +57,7 @@ class HelloAssoAdapter:
             HelloAssoAdapter.get_custom_value(item['custom_infos'], 'Genre'),
             pendulum.parse(HelloAssoAdapter.get_custom_value(item['custom_infos'],
                                                              'Date de naissance')).format('DD/MM/YYYY'),
+            HelloAssoAdapter.get_custom_value(item['custom_infos'], 'Lieu de naissance'),
             None,
             creneau,
             LABEL_EXTERIEUR if item['option_label'] == LABEL_EXTERIEUR else LABEL_LICENCIE,
@@ -83,4 +84,4 @@ class HelloAssoAdapter:
 
     @staticmethod
     def get_certificates(items_added):
-        return [{'file_url': item[12], 'first_name': item[3], 'last_name': item[4]} for item in items_added]
+        return [{'file_url': item[13], 'first_name': item[3], 'last_name': item[4]} for item in items_added]
