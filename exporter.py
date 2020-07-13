@@ -36,10 +36,11 @@ def ha2google(from_date: datetime = None):
     google_spreadsheet = GoogleSpreadSheet(os.getenv('GOOGLE_SPREADSHEET'), os.getenv('GOOGLE_CREDENTIALS'))
     items_added = google_spreadsheet.import_rows(data)
 
-    files_to_transfer = adapter.get_certificates(items_added)
-
-    googledrive = GoogleDrive(os.getenv('GOOGLE_CREDENTIALS'))
-    googledrive.import_files(files_to_transfer, os.getenv('GOOGLE_FOLDER_ID'), )
+    # FIXME: can't download files from helloasso with the api (authent fails)
+    # files_to_transfer = adapter.get_certificates(items_added)
+    #
+    # googledrive = GoogleDrive(os.getenv('GOOGLE_CREDENTIALS'))
+    # googledrive.import_files(files_to_transfer, os.getenv('GOOGLE_FOLDER_ID'), )
 
 
 def _check_env_variables():

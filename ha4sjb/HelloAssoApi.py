@@ -52,3 +52,20 @@ class HelloAssoApi:
         logger.debug(body)
         logger.info(f"{len(body)} action(s) recorded from {from_date}")
         return body
+
+    @staticmethod
+    def get_file(url: str):
+        logger.info(f"Call {url}")
+        API_KEY = "w5Hg7H5QqM94vxBDvn52Z"
+        API_USER = "saint - jacques - badminton"
+
+        response = requests.request("GET", url, auth=HTTPBasicAuth(API_USER, API_KEY))
+
+        if response.status_code >= 400:
+            logger.error(f"Can't get a response from {url}")
+            return []
+
+        body = response.json().get('resources', [])
+        logger.debug(body)
+        logger.info(f"{len(body)} action(s)")
+        return body
