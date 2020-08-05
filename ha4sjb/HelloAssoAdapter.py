@@ -47,6 +47,10 @@ class HelloAssoAdapter:
         if item['option_label'] == "Extérieur":
             poona = "Extérieur"
 
+        cp = HelloAssoAdapter.get_custom_value(item['custom_infos'], 'Code Postal')
+        ville = HelloAssoAdapter.get_custom_value(item['custom_infos'], 'Ville')
+        adresse = HelloAssoAdapter.get_custom_value(item['custom_infos'], 'Adresse')
+
         # The order must match the GoogleSheet columns
         google_item = [
             item['id'],
@@ -70,8 +74,10 @@ class HelloAssoAdapter:
             facture,
             HelloAssoAdapter.get_custom_value(item['custom_infos'], 'Interclubs'),
             item['email'],
-            HelloAssoAdapter.get_custom_value(item['custom_infos'], 'Code Postal'),
-            LABEL_OUI,
+            HelloAssoAdapter.get_custom_value(item['custom_infos'], 'Numéro de téléphone'),
+            adresse,
+            ville,
+            cp,
             None,
             LABEL_HELLOASSO,
             None,
