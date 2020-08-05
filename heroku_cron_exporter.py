@@ -4,7 +4,7 @@ from exporter import ha2google
 sched = BlockingScheduler()
 
 
-@sched.scheduled_job('interval', days=1)
+@sched.scheduled_job('interval', hours=12)
 def scheduled_job():
     ha2google()
 
