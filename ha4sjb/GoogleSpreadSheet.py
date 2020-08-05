@@ -20,9 +20,10 @@ class GoogleSpreadSheet:
         self.sheet = client.open(spreadsheet).sheet1  # Open the spreadhseet
 
     def import_rows(self, data: list) -> list:
+        current_ids = self.sheet.col_values(RECORD_ID_COL)
         items = list()
         for item in data:
-            if item[0] not in self.sheet.col_values(RECORD_ID_COL):
+            if item[0] not in current_ids:
                 items.append(item)
                 self.sheet.append_row(item)
                 logger.info(f"{item[3]} {item[4]} added to {self.sheet.spreadsheet}")
