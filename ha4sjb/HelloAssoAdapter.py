@@ -60,7 +60,7 @@ class HelloAssoAdapter:
             item['first_name'],
             HelloAssoAdapter.get_custom_value(item['custom_infos'], 'Genre'),
             pendulum.parse(HelloAssoAdapter.get_custom_value(item['custom_infos'],
-                                                             'Date de naissance')).format('DD/MM/YYYY'),
+                                                             'Date de naissance'), strict=False).format('DD/MM/YYYY'),
             HelloAssoAdapter.get_custom_value(item['custom_infos'], 'Lieu de naissance'),
             None,
             creneau,
