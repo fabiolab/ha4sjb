@@ -80,9 +80,6 @@ class HelloAssoAdapter:
             cp,
             None,
             LABEL_HELLOASSO,
-            None,
-            None,
-            None,
             f"{item['amount']} €"
         ]
 
