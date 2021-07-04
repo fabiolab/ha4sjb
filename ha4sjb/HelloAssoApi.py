@@ -46,6 +46,7 @@ class HelloAssoApi:
 
         if response.status_code >= 400:
             logger.error(f"Can't get a response from {url}")
+            logger.error(f"{response.status_code}/{response.reason}")
             return []
 
         body = response.json().get('resources', [])

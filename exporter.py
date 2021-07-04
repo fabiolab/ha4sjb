@@ -25,7 +25,7 @@ def ha2google(from_date: datetime = None):
     _check_env_variables()
 
     if not from_date:
-        from_date = pendulum.datetime(2020, 1, 1)
+        from_date = pendulum.datetime(2020, 9, 1)
 
     api_ha = HelloAssoApi()
     actions = api_ha.get_actions(from_date)
