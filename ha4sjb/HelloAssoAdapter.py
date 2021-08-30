@@ -1,4 +1,5 @@
 from loguru import logger
+import urllib.parse
 import pendulum
 
 LABEL_EXTERIEUR = "Extérieur"
@@ -8,6 +9,8 @@ LABEL_NON = "Non"
 LABEL_FAIT = "Fait"
 LABEL_A_FAIRE = "A faire"
 LABEL_HELLOASSO = "HelloAsso"
+
+BASE_URL = 'https://www.helloasso.com/documents/documents_users_souscriptions/'
 
 
 class HelloAssoAdapter:
@@ -66,9 +69,9 @@ class HelloAssoAdapter:
             creneau,
             LABEL_EXTERIEUR if item['option_label'] == LABEL_EXTERIEUR else LABEL_LICENCIE,
             LABEL_OUI,
-            HelloAssoAdapter.get_custom_value(item['custom_infos'], "Autorisation mineurs"),
-            HelloAssoAdapter.get_custom_value(item['custom_infos'],
-                                              "Certificat médical de moins d'un an ou Questionnaire Santé"),
+            HelloAssoAdapter.deal_url(HelloAssoAdapter.get_custom_value(item['custom_infos'], "Autorisation mineurs")),
+            HelloAssoAdapter.deal_url(HelloAssoAdapter.get_custom_value(item['custom_infos'],
+                                                                        "Certificat médical de moins d'un an ou Questionnaire Santé")),
             None,
             poona,
             facture,
@@ -88,3 +91,11 @@ class HelloAssoAdapter:
     @staticmethod
     def get_certificates(items_added):
         return [{'file_url': item[13], 'first_name': item[3], 'last_name': item[4]} for item in items_added]
+
+    @staticmethod
+    def deal_url(the_string: str) -> str:
+        if not the_string:
+            return the_string
+        if the_string.lower().startswith('http'):
+            return the_string
+        return f"{BASE_URL}{urllib.parse.quote(the_string)}"
