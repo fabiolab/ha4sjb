@@ -37,7 +37,7 @@ class HelloAssoApi:
     def get_actions(from_date: datetime = _get_season_start_date()) -> list:
         params = {
             "from": from_date,
-            "results_per_page": 500
+            "results_per_page": 100
         }
         url = f"https://{HOST}{ENDPOINT}{ACTIONS_ROUTE}"
         logger.info(f"Call {url}")
