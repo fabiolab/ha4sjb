@@ -7,7 +7,7 @@ from datetime import datetime, date
 
 HOST = "api.helloasso.com"
 ENDPOINT = "/v3"
-RESULT_PER_PAGE = 500
+RESULT_PER_PAGE = 100
 ACTIONS_ROUTE = f"/organizations/{os.getenv('ORGANIZATION_ID')}/campaigns/{os.getenv('CAMPAIGN_ID')}/actions.json"
 
 
@@ -34,10 +34,11 @@ class HelloAssoApi:
         ...
 
     @staticmethod
-    def get_actions(from_date: datetime = _get_season_start_date()) -> list:
+    def get_actions_by_page(from_date: date = _get_season_start_date(), page: int = 1) -> list:
         params = {
             "from": from_date,
-            "results_per_page": 100
+            "results_per_page": RESULT_PER_PAGE,
+            "page": page
         }
         url = f"https://{HOST}{ENDPOINT}{ACTIONS_ROUTE}"
         logger.info(f"Call {url}")
@@ -53,6 +54,17 @@ class HelloAssoApi:
         logger.debug(body)
         logger.info(f"{len(body)} action(s) recorded from {from_date}")
         return body
+
+    @staticmethod
+    def get_actions(from_date: date = _get_season_start_date()) -> list:
+        page = 1
+        actions = HelloAssoApi.get_actions_by_page(from_date)
+        next_page_actions = actions
+        while next_page_actions:
+            page += 1
+            next_page_actions = HelloAssoApi.get_actions_by_page(from_date=from_date, page=page)
+            actions += next_page_actions
+        return actions
 
     @staticmethod
     def get_file(url: str):

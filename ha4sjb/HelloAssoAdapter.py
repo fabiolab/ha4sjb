@@ -21,7 +21,8 @@ class HelloAssoAdapter:
     def load_from_apiresponse(self, resources: list):
         google_items = list()
         for item in resources:
-            google_items.append(self.h4_to_google(item))
+            if item['status'].upper() == "PROCESSED":
+                google_items.append(self.h4_to_google(item))
 
         logger.info(f"{len(google_items)} items loaded")
         return google_items
