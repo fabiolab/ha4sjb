@@ -51,7 +51,7 @@ class HelloAssoApi:
             return []
 
         body = response.json().get('resources', [])
-        logger.debug(body)
+        logger.info([f"{people['first_name']} {people['last_name']}" for people in body])
         logger.info(f"{len(body)} action(s) recorded from {from_date}")
         return body
 

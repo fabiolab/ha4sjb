@@ -52,19 +52,19 @@ class HelloAssoAdapter:
             poona = "Extérieur"
 
         cp = HelloAssoAdapter.get_custom_value(item['custom_infos'], 'Code Postal')
-        ville = HelloAssoAdapter.get_custom_value(item['custom_infos'], 'Ville')
-        adresse = HelloAssoAdapter.get_custom_value(item['custom_infos'], 'Adresse')
+        ville = HelloAssoAdapter.get_custom_value(item['custom_infos'], 'Ville').title()
+        adresse = HelloAssoAdapter.get_custom_value(item['custom_infos'], 'Adresse').lower()
 
         # The order must match the GoogleSheet columns
         google_item = [
             item['id'],
             pendulum.parse(item['date']).format('DD/MM/YYYY'),
             now.format('DD/MM/YYYY'),
-            item['last_name'].upper(),
-            item['first_name'],
+            item['last_name'].title(),
+            item['first_name'].title(),
             HelloAssoAdapter.get_custom_value(item['custom_infos'], 'Genre'),
             HelloAssoAdapter.get_custom_value(item['custom_infos'], 'Date de naissance'),
-            HelloAssoAdapter.get_custom_value(item['custom_infos'], 'Lieu de naissance'),
+            HelloAssoAdapter.get_custom_value(item['custom_infos'], 'Lieu de naissance').title(),
             None,
             creneau,
             LABEL_EXTERIEUR if item['option_label'] == LABEL_EXTERIEUR else LABEL_LICENCIE,
