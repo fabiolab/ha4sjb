@@ -8,6 +8,7 @@ LABEL_OUI = "Oui"
 LABEL_NON = "Non"
 LABEL_FAIT = "Fait"
 LABEL_A_FAIRE = "A faire"
+LABEL_AUTO = "Auto"
 LABEL_HELLOASSO = "HelloAsso"
 
 BASE_URL = 'https://www.helloasso.com/documents/documents_users_souscriptions/'
@@ -45,7 +46,10 @@ class HelloAssoAdapter:
 
         facture = HelloAssoAdapter.get_custom_value(item['custom_infos'], 'Facture')
         if facture == LABEL_OUI:
-            facture = LABEL_A_FAIRE
+            if int(item['amount']):
+                facture = LABEL_AUTO
+            else:
+                facture = LABEL_A_FAIRE
 
         poona = LABEL_NON
         if item['option_label'] == "Extérieur":
